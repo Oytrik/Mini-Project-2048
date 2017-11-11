@@ -1,12 +1,6 @@
 import pygame
 import random
-a=[2,4]
-m=random.choice(a)
-n=random.choice(a)
-x=[200,300,400,500]
-y=[100,200,300,400]
-inx=random.choice(x)
-iny=random.choice(y)
+
 pygame.init()
 pygame.font.init()
 myfont = pygame.font.SysFont('Comic Sans MS', 50)
@@ -43,6 +37,13 @@ while not quit:
     screen.blit(textsurface,(55,210))  
     pygame.display.update()
     clock.tick(60)
-
+def initial ():
+    a=[2,4]
+    m=random.choice(a)
+    n=random.choice(a)
+    x=[200,300,400,500]
+    y=[100,200,300,400]
+    inx=random.choice(x)
+    iny=random.choice(y)
 pygame.quit()
 
