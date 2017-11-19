@@ -1,6 +1,5 @@
 import pygame
 import random
-a=m=n=x=y=inx1=iny1=X=Y=inx2=iny2=0
 pygame.init()
 pygame.font.init()
 myfont = pygame.font.SysFont('Comic Sans MS', 50)
@@ -13,51 +12,28 @@ screen = pygame.display.set_mode((800,600))
 pygame.display.set_caption('2048') 
 clock = pygame.time.Clock()
 A=[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+points=0
 def initial():    
-    a=[2,4]
+    a=[2,2,2,4]
+    global points,hscore
+    points=0
     m=random.choice(a)
     n=random.choice(a)
     print (m,n)
-    x=[200,300,400,500]
-    y=[100,200,300,400]
+    x=[0,1,2,3]
+    y=[0,1,2,3]
     inx1=random.choice(x)
     iny1=random.choice(y)
     inx2=random.choice(x)
-    iny2=random.choice(y)    
-    if inx1 == 200:
-        X=0
-    if inx1 == 300:
-        X=1
-    if inx1 == 400:
-        X=2
-    if inx1 == 500:
-        X=3
-    if iny1 == 100:
-        Y=0
-    if iny1 == 200:
-        Y=1
-    if iny1 == 300:
-        Y=2
-    if iny1 == 400:
-        Y=3
-    A[X][Y]=m
-    if inx2 == 200:
-        X=0
-    if inx2 == 300:
-        X=1
-    if inx2 == 400:
-        X=2
-    if inx2 == 500:
-        X=3
-    if iny2 == 100:
-        Y=0
-    if iny2 == 200:
-        Y=1
-    if iny2 == 300:
-        Y=2
-    if iny2 == 400:
-        Y=3
-    A[X][Y]=n
+    iny2=random.choice(y)   
+    while inx1==inx2 and iny1==iny2:
+        inx1=random.choice(x)
+        inx2=random.choice(x)
+        iny1=random.choice(y)
+        iny2=random.choice(y)   
+    A[inx1][iny1]=m    
+    A[inx2][iny2]=n
+    print (A)
 def draw():
     for i in range (0,4):
         for j in range (0,4):
@@ -99,4 +75,3 @@ while not quit:
 score=0
 hscore=0    
 pygame.quit()
-
