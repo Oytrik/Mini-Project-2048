@@ -20,7 +20,6 @@ try:
     a.close()
 except:
     hscore=0
-w=x=y=z=1
 def initial():    
     a=[2,2,2,4]
     global points,hscore
@@ -73,7 +72,7 @@ def draw():
         textsurface = myfont.render("Game Over !!!", False, RED)
         screen.blit(textsurface,(300,50))        
 def right():
-    global w,points,hscore
+    global points,hscore
     w=0		
     for i in range (0,4):
         for j in range (0,4):
@@ -112,7 +111,7 @@ def right():
             hscore=points
         add()
 def left():
-    global x,points,hscore
+    global points,hscore
     x=0		
     for i in range (0,4):
         for j in range (0,4):
@@ -151,7 +150,7 @@ def left():
             hscore=points
         add()             
 def up():
-    global y,points,hscore
+    global points,hscore
     y=0		
     for i in range (0,4):
         for j in range (0,4):
@@ -189,8 +188,8 @@ def up():
             hscore=points
         add()
 def down():
-    global z,points,hscore
-    z=0		
+    global points,hscore
+    z=0	
     for i in range (0,4):
         for j in range (0,4):
             if A[j][i] != 0:
