@@ -12,7 +12,9 @@ screen = pygame.display.set_mode((800,600))
 pygame.display.set_caption('2048') 
 clock = pygame.time.Clock()
 A=[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+A1=[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
 points=0
+uscore=0
 try:
     a=open("highscore.txt","r")    
     x=a.readlines()
@@ -22,11 +24,11 @@ except:
     hscore=0
 def initial():    
     a=[2,2,2,4]
-    global points,hscore
+    global points,hscore,uscore
+    uscore=0
     points=0
     m=random.choice(a)
-    n=random.choice(a)
-    print (m,n)
+    n=random.choice(a)    
     x=[0,1,2,3]
     y=[0,1,2,3]
     inx1=random.choice(x)
@@ -39,9 +41,8 @@ def initial():
         iny1=random.choice(y)
         iny2=random.choice(y)   
     A[inx1][iny1]=m    
-    A[inx2][iny2]=n
-    print (A)
-def draw():
+    A[inx2][iny2]=n    
+def draw():    
     global hscore,points
     for i in range (0,4):
         for j in range (0,4):
@@ -70,10 +71,15 @@ def draw():
                 o=1                   
     if m==0 and n==0 and o==0:
         textsurface = myfont.render("Game Over !!!", False, RED)
-        screen.blit(textsurface,(300,50))        
-def right():
-    global points,hscore
-    w=0		
+        screen.blit(textsurface,(300,50)) 
+def undo():
+    global A,points,uscore
+    points=uscore
+    A=[[i for i in x] for x in A1] 
+def right():    	
+    global points,hscore,uscore
+    w=0
+    uscore=points		
     for i in range (0,4):
         for j in range (0,4):
             if A[i][j] != 0:
@@ -87,8 +93,10 @@ def right():
                                 w=1
                                 break
                         except:
-                            w=0    
+                            w=0        
     if w==1:
+        global A1
+        A1=[[i for i in x] for x in A]
         for r in range(0,4):            
                 for c in range(0,3):
                     if(A[r][c]!=0 and A[r][c+1]==0):
@@ -106,13 +114,14 @@ def right():
                             for i in reversed(range(1,k+1)):
                                 A[r][i]=A[r][i-1]
                                 A[r][i-1]=0                    
-                 
+ 
         if hscore<points:
             hscore=points
         add()
-def left():
-    global points,hscore
-    x=0		
+def left():    
+    global points,hscore,uscore
+    x=0
+    uscore=points		
     for i in range (0,4):
         for j in range (0,4):
             if A[i][j] != 0:
@@ -128,6 +137,8 @@ def left():
                         except:
                             x=0   
     if x==1:
+        global A1 
+        A1=[[i for i in x] for x in A]
         for r in range(0,4):
                 for c in reversed(range(1,4)):
                     if(A[r][c]!=0 and A[r][c-1]==0):
@@ -145,13 +156,14 @@ def left():
                             for i in range(k,3):
                                 A[r][i]=A[r][i+1]
                                 A[r][i+1]=0
-            
+ 
         if hscore<points:
             hscore=points
         add()             
-def up():
-    global points,hscore
-    y=0		
+def up():            
+    global points,hscore,uscore
+    y=0
+    uscore=points		
     for i in range (0,4):
         for j in range (0,4):
             if A[j][i] != 0:
@@ -165,8 +177,10 @@ def up():
                                 y=1
                                 break
                         except:
-                            y=0    
+                            y=0        
     if y==1:
+        global A1
+        A1=[[i for i in x] for x in A]
         for c in range(0,4):
                 for r in reversed(range(1,4)):
                     if(A[r][c]!=0 and A[r-1][c]==0):
@@ -185,11 +199,12 @@ def up():
                                 A[i][c]=A[i+1][c]
                                 A[i+1][c]=0                
         if hscore<points:
-            hscore=points
+            hscore=points        
         add()
-def down():
-    global points,hscore
-    z=0	
+def down():    
+    global points,hscore,uscore
+    z=0
+    uscore=points		
     for i in range (0,4):
         for j in range (0,4):
             if A[j][i] != 0:
@@ -205,6 +220,8 @@ def down():
                         except:
                             z=0    
     if z==1:
+        global A1
+        A1=[[i for i in x] for x in A]
         for c in range(0,4):
                 for r in range(0,3):
                     if(A[r][c]!=0 and A[r+1][c]==0):
@@ -222,34 +239,35 @@ def down():
                             for i in reversed(range(1,k+1)):
                                 A[i][c]=A[i-1][c]
                                 A[i-1][c]=0
-                
+ 
         if hscore<points:
             hscore=points
         add()
 def add():
-    a=[2,4]
+    a=[2,2,2,4]
     m=random.choice(a)
     while 1:
         i=int(random.uniform(0,4))
         j=int(random.uniform(0,4))
         if(A[i][j]==0):
             A[i][j]=m
-            break
-        
+            break    
+ 
 def reset():
+    global A
     for i in range (0,4):
         for j in range (0,4):
             A[i][j]=0
     initial()
 initial()
 quit = False
-while not quit:
+while not quit:     
     screen.fill((50, 50, 50))    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            quit = True 
-        
-        if event.type ==pygame.KEYDOWN:
+            quit = True
+ 
+        if event.type ==pygame.KEYDOWN:           
             if event.key==pygame.K_RIGHT:
                 right()
         if event.type ==pygame.KEYDOWN:
@@ -260,7 +278,8 @@ while not quit:
                 up()               
         if event.type ==pygame.KEYDOWN:
             if event.key==pygame.K_DOWN:
-                down()                                 
+                down() 
+ 
     for i in range (0,5):
     	pygame.draw.line(screen, BLUE, (200,100*(i+1) ), (600, 100*(i+1)))
     	pygame.draw.line(screen, BLUE, (200+100*i,100 ), (200+100*i,500 ))          
@@ -272,17 +291,24 @@ while not quit:
     screen.blit(textsurface,(630,150)) 
     mouse=pygame.mouse.get_pos()    
     click=pygame.mouse.get_pressed()
+ 
     if mouse[0]<175 and mouse[0]>50 and mouse[1]<250 and mouse[1]>200:
         pygame.draw.rect(screen, GREEN,(50,200,125,50))
-        if click[0]==1:
+        if click[0]==1:            
             reset()            
     else:	
         pygame.draw.rect(screen,RED,(50,200,125,50))   
     textsurface = myfont.render('RESET', False, WHITE)
-    screen.blit(textsurface,(55,210))  
+    screen.blit(textsurface,(55,210))
+    
+    if mouse[0]<175 and mouse[0]>50 and mouse[1]<350 and mouse[1]>300:
+        pygame.draw.rect(screen, GREEN,(50,300,125,50)) 
+        if click[0]==1:
+            undo()
+    else:	
+        pygame.draw.rect(screen,BLUE,(50,300,125,50))   
+    textsurface = myfont.render('UNDO', False, WHITE)
+    screen.blit(textsurface,(60,310))  
     draw()
-     
-    pygame.display.update()
-    clock.tick(60) 
+    pygame.display.update()   
 pygame.quit()
-
