@@ -13,7 +13,13 @@ pygame.display.set_caption('2048')
 clock = pygame.time.Clock()
 A=[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
 points=0
-hscore=0
+try:
+    a=open("highscore.txt","r")    
+    x=a.readlines()
+    hscore=int(x[0])
+    a.close()
+except:
+    hscore=0
 w=x=y=z=1
 def initial():    
     a=[2,2,2,4]
@@ -47,6 +53,9 @@ def draw():
     screen.blit(textsurface,(680,100))
     textsurface = myfont.render(str(hscore), False, WHITE)
     screen.blit(textsurface,(680,200))
+    a=open("highscore.txt","w")    
+    a.writelines(str(hscore))
+    a.close()    
     m=n=o=0      
     for i in range(0,4):
         for j in range(0,3):
@@ -62,7 +71,7 @@ def draw():
                 o=1                   
     if m==0 and n==0 and o==0:
         textsurface = myfont.render("Game Over !!!", False, RED)
-        screen.blit(textsurface,(300,50))
+        screen.blit(textsurface,(300,50))        
 def right():
     global w,points,hscore
     w=0		
@@ -234,7 +243,6 @@ def reset():
             A[i][j]=0
     initial()
 initial()
-print (A)
 quit = False
 while not quit:
     screen.fill((50, 50, 50))    
