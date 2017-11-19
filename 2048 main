@@ -1,0 +1,109 @@
+import random
+ar=[["","","",""],
+    ["","","",""],
+    ["","","",""],
+    ["","","",""]]
+i1=int(random.uniform(0,4))
+i2=int(random.uniform(0,4))
+j1=int(random.uniform(0,4))
+j2=int(random.uniform(0,4))
+while i1==i2 or j1==j2:
+    i1=int(random.uniform(0,4))
+    i2=int(random.uniform(0,4))
+    j1=int(random.uniform(0,4))
+    j2=int(random.uniform(0,4))
+ar[i1][j1]=2
+ar[i2][j2]=2
+for i in range(0,4):
+        print(ar[i])
+s=input()
+while s!='q':
+    s=input("direction--")
+#right
+    if(s=='r'):
+        for r in range(0,4):
+            for c in range(0,3):
+                if(ar[r][c]!="" and ar[r][c+1]==""):
+                    ar[r][c+1]=ar[r][c]
+                    ar[r][c]=""
+                    for i in reversed(range(1,c+1)):
+                        ar[r][i]=ar[r][i-1]
+                        ar[r][i-1]=""
+            for c in reversed(range(1,4)):
+                if(ar[r][c]!="" and ar[r][c]==ar[r][c-1]):
+                    ar[r][c]=str(int(ar[r][c])*2)
+                    ar[r][c-1]=""
+                    for k in reversed(range(0,c)):
+                        for i in reversed(range(1,k+1)):
+                            ar[r][i]=ar[r][i-1]
+                            ar[r][i-1]=""
+#left
+    if(s=='l'):
+        for r in range(0,4):
+            for c in reversed(range(1,4)):
+                if(ar[r][c]!="" and ar[r][c-1]==""):
+                    ar[r][c-1]=ar[r][c]
+                    ar[r][c]=""
+                    for i in range(c,3):
+                        ar[r][i]=ar[r][i+1]
+                        ar[r][i+1]=""
+            for c in range(0,3):
+                if(ar[r][c]!="" and ar[r][c]==ar[r][c+1]):
+                    ar[r][c]=str(int(ar[r][c])*2)
+                    ar[r][c+1]=""
+                    for k in range(c+1,4):
+                        for i in range(k,3):
+                            ar[r][i]=ar[r][i+1]
+                            ar[r][i+1]=""
+#down 
+    if(s=='d'):
+        for c in range(0,4):
+            for r in range(0,3):
+                if(ar[r][c]!="" and ar[r+1][c]==""):
+                    ar[r+1][c]=ar[r][c]
+                    ar[r][c]=""
+                    for i in reversed(range(1,r+1)):
+                        ar[i][c]=ar[i-1][c]
+                        ar[i-1][c]=""
+            for r in reversed(range(1,4)):
+                if(ar[r][c]!="" and ar[r-1][c]==ar[r][c]):
+                    ar[r][c]=str(int(ar[r][c])*2)
+                    ar[r-1][c]=""
+                    for k in reversed(range(0,r)):
+                        for i in reversed(range(1,k+1)):
+                            ar[i][c]=ar[i-1][c]
+                            ar[i-1][c]=""
+                            
+#up
+    if(s=='u'):
+        for c in range(0,4):
+            for r in reversed(range(1,4)):
+                if(ar[r][c]!="" and ar[r-1][c]==""):
+                    ar[r-1][c]=ar[r][c]
+                    ar[r][c]=""
+                    for i in range(r,3):
+                        ar[i][c]=ar[i+1][c]
+                        ar[i+1][c]=""
+            for r in range(0,3):
+                if(ar[r][c]!="" and ar[r][c]==ar[r+1][c]):
+                    ar[r][c]=str(int(ar[r][c])*2)
+                    ar[r+1][c]=""
+                    for k in range(r+1,4):
+                        for i in range(k,3):
+                            ar[i][c]=ar[i+1][c]
+                            ar[i+1][c]=""                
+                
+                  
+
+        
+    while 1>0:
+        i=int(random.uniform(0,4))
+        j=int(random.uniform(0,4))
+        if(ar[i][j]==""):
+            ar[i][j]=2
+            break
+    for i in range(0,4):
+        print(ar[i])
+    s=input()
+        
+        
