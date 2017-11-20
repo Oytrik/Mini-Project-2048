@@ -537,7 +537,7 @@ while not quit: #While game is running
         for i in range(0,4):
             for j in range(0,4):
 
-                if A[i][j]==16: #Checking if any element in game matrix is equal to 2048               
+                if A[i][j]==2048: #Checking if any element in game matrix is equal to 2048               
                     win_message()#Displaying victory message by calling win_message() function                   
 
     pygame.display.update() #Update portions of the screen for software displays  
