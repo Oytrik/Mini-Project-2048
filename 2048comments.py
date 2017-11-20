@@ -197,218 +197,223 @@ def right():
     for i in range (0,4):
         for j in range (0,4):
 
-            if A[i][j] != 0:
+            if A[i][j] != 0:#If element is non-zero
                 for k in range(j+1,4):
-                    if A[i][k] == 0:
+                    if A[i][k] == 0:#If there is empty space right of non-zero element
                         w=1
                         break
 
                     else:
-                        try:
+                        try:#If horizonatally adjacent elements are equal
                             if A[i][j] == A[i][j+1]:
                                 w=1
                                 break
                         except:
                             w=0    
 
-    if w==1:
+    if w==1: #If horizonatally adjacent elements are equal/there is empty space to the right
         global A1
-        A1=[[i for i in x] for x in A]
+        A1=[[i for i in x] for x in A] #Storing current game matrix in another list
 
         for r in range(0,4):            
                 for c in range(0,3):
-                    if(A[r][c]!=0 and A[r][c+1]==0):
-                        A[r][c+1]=A[r][c]
-                        A[r][c]=0
+                    if(A[r][c]!=0 and A[r][c+1]==0):#If there empty space to the right of a non-zero element
+                        A[r][c+1]=A[r][c]#Shifting element rightward
+                        A[r][c]=0 #Creating empty space at previous position of element
 
-                        for i in reversed(range(1,c+1)):
+                        for i in reversed(range(1,c+1)):#Shift if tere empty spaces
                             A[r][i]=A[r][i-1]
                             A[r][i-1]=0               
 
                 for c in reversed(range(1,4)):
-                    if(A[r][c]!=0 and A[r][c]==A[r][c-1]):
-                        A[r][c]=A[r][c]*2
-                        points=points+A[r][c]
-                        A[r][c-1]=0
+                    if(A[r][c]!=0 and A[r][c]==A[r][c-1]):#If element is non-zero and adjacent elements are equal
+                        A[r][c]=A[r][c]*2 #Adding them
+                        points=points+A[r][c]#Increase the score as required
+                        A[r][c-1]=0 #Changing leftward element to zero
 
                         for k in reversed(range(0,c)):
                             for i in reversed(range(1,k+1)):
-                                if A[r][i]==0:
-                                    A[r][i]=A[r][i-1]
+                                if A[r][i]==0:#If there is a zero element
+                                    A[r][i]=A[r][i-1]#Shifting it
                                     A[r][i-1]=0                    
  
-        if hscore<points:
+        if hscore<points:#If score exceeds high score
             hscore=points
 
-        add()
+        add()#Add new element by calling add() function
 
+#To move elements of game matrix left when left arrow is clicked
 def left():
-    
+    #Initialzing variables
     global x,points,hscore,uscore
     x=0
     uscore=points		
 
     for i in range (0,4):
         for j in range (0,4):
-            if A[i][j] != 0:
+            if A[i][j] != 0:#If element is non-zero
                 for k in range(0,j):
-                    if A[i][k] == 0:
+                    if A[i][k] == 0:#If there is empty space left of non-zero element
                         x=1
                         break
 
                     else:
-                        try:
+                        try:#If horizonatally adjacent elements are equal
                             if A[i][j] == A[i][j-1]:
                                 x=1
                                 break
                         except:
                             x=0   
 
-    if x==1:
+    if x==1:#If horizonatally adjacent elements are equal/there is empty space to the left
         global A1 
-        A1=[[i for i in x] for x in A]
+        A1=[[i for i in x] for x in A]#Storing current game matrix in another list
+
         for r in range(0,4):
                 for c in reversed(range(1,4)):
-                    if(A[r][c]!=0 and A[r][c-1]==0):
-                        A[r][c-1]=A[r][c]
-                        A[r][c]=0
+                    if(A[r][c]!=0 and A[r][c-1]==0):#If there empty space to the left of a non-zero element
+                        A[r][c-1]=A[r][c]#Shifting element leftward
+                        A[r][c]=0 #Creating empty space at previous position of element
 
-                        for i in range(c,3):
+                        for i in range(c,3):#Shift if tere empty space
                             A[r][i]=A[r][i+1]
                             A[r][i+1]=0               
 
                 for c in range(0,3):
-                    if(A[r][c]!=0 and A[r][c]==A[r][c+1]):
-                        A[r][c]=A[r][c]*2
-                        points=points+A[r][c]
-                        A[r][c+1]=0
+                    if(A[r][c]!=0 and A[r][c]==A[r][c+1]):#If element is non-zero and adjacent elements are equal
+                        A[r][c]=A[r][c]*2#Adding them
+                        points=points+A[r][c]#Increase the score as required
+                        A[r][c+1]=0#Changing rightward element to zero
 
                         for k in range(c+1,4):
                             for i in range(k,3):
-                                if A[r][i]==0:
-                                    A[r][i]=A[r][i+1]
+                                if A[r][i]==0:#If there is a zero element
+                                    A[r][i]=A[r][i+1]#Shifting it
                                     A[r][i+1]=0
  
-        if hscore<points:
+        if hscore<points:#If score exceeds high score
             hscore=points
 
-        add()             
-
+        add()#Add new element by calling add() function
+             
+#To move elements of game matrix up when up arrow is clicked
 def up():
-        
+    #Initialzing variables    
     global y,points,hscore,uscore
     y=0
     uscore=points		
 
     for i in range (0,4):
         for j in range (0,4):
-            if A[j][i] != 0:
+            if A[j][i] != 0:#If element is non-zero
                 for k in range(0,j):
-                    if A[k][i] == 0:
+                    if A[k][i] == 0:#If there is empty space above non-zero element
                         y=1
                         break
 
                     else:
                         try:
-                            if A[j][i] == A[j-1][i]:
+                            if A[j][i] == A[j-1][i]:#If vertically adjacent elements are equal
                                 y=1
                                 break
                         except:
                             y=0        
 
-    if y==1:
+    if y==1:#If vertically adjacent elements are equal/there is empty space above
         global A1
-        A1=[[i for i in x] for x in A]
+        A1=[[i for i in x] for x in A]#Storing current game matrix in another list
 
         for c in range(0,4):
                 for r in reversed(range(1,4)):
-                    if(A[r][c]!=0 and A[r-1][c]==0):
-                        A[r-1][c]=A[r][c]
-                        A[r][c]=0
+                    if(A[r][c]!=0 and A[r-1][c]==0):#If there empty space above of a non-zero element
+                        A[r-1][c]=A[r][c]#Shifting element upward
+                        A[r][c]=0 #Creating empty space at previous position of element
 
-                        for i in range(r,3):
+                        for i in range(r,3):#Shift if tere empty space
                             A[i][c]=A[i+1][c]
                             A[i+1][c]=0                   
 
                 for r in range(0,3):
-                    if(A[r][c]!=0 and A[r][c]==A[r+1][c]):
-                        A[r][c]=A[r][c]*2
-                        A[r+1][c]=0
-                        points=points+A[r][c]
+                    if(A[r][c]!=0 and A[r][c]==A[r+1][c]):#If element is non-zero and adjacent elements are equal
+                        A[r][c]=A[r][c]*2#Adding them
+                        A[r+1][c]=0 #Change downward element to zero
+                        points=points+A[r][c]#Increase the score as required
 
                         for k in range(r+1,4):
                             for i in range(k,3):
-                                if A[i][c]==0:
-                                    A[i][c]=A[i+1][c]
+                                if A[i][c]==0:#If there is a zero element
+                                    A[i][c]=A[i+1][c]#Shifting it
                                     A[i+1][c]=0                
 
-        if hscore<points:
+        if hscore<points:#If score exceeds high score
             hscore=points        
 
-        add()
+        add()#Add new element by calling add() function
 
+#To move elements of game matrix down when down arrow is clicked
 def down():
-    
+    #Initialzing variables
     global z,points,hscore,uscore
     z=0
     uscore=points		
 
     for i in range (0,4):
         for j in range (0,4):
-            if A[j][i] != 0:
+            if A[j][i] != 0:#If element is non-zero
                 for k in range(j+1,4):
-                    if A[k][i] == 0:
+                    if A[k][i] == 0:#If there is empty space below non-zero element
                         z=1
                         break
 
                     else:
                         try:
-                            if A[j][i] == A[j+1][i]:
+                            if A[j][i] == A[j+1][i]:#If vertically adjacent elements are equal
                                 z=1
                                 break
                         except:
                             z=0    
 
-    if z==1:
+    if z==1:#If vertically adjacent elements are equal/there is empty space above
         global A1
-        A1=[[i for i in x] for x in A]
+        A1=[[i for i in x] for x in A]#Storing current game matrix in another list
 
         for c in range(0,4):
                 for r in range(0,3):
-                    if(A[r][c]!=0 and A[r+1][c]==0):
-                        A[r+1][c]=A[r][c]
-                        A[r][c]=0
+                    if(A[r][c]!=0 and A[r+1][c]==0):#If there empty space below a non-zero element
+                        A[r+1][c]=A[r][c]#Shifting element downward
+                        A[r][c]=0 #Creating empty space at previous position of element
 
-                        for i in reversed(range(1,r+1)):
+                        for i in reversed(range(1,r+1)):#Shift if tere empty space
                             A[i][c]=A[i-1][c]
                             A[i-1][c]=0          
 
                 for r in reversed(range(1,4)):
-                    if(A[r][c]!=0 and A[r-1][c]==A[r][c]):
-                        A[r][c]=A[r][c]*2
-                        A[r-1][c]=0
-                        points=points+A[r][c]
+                    if(A[r][c]!=0 and A[r-1][c]==A[r][c]):#If element is non-zero and adjacent elements are equal
+                        A[r][c]=A[r][c]*2#Adding them
+                        A[r-1][c]=0#Change upward element to zero
+                        points=points+A[r][c]#Increase the score as required
 
                         for k in reversed(range(0,r)):
                             for i in reversed(range(1,k+1)):
-                                if A[i][c]==0:
-                                    A[i][c]=A[i-1][c]
+                                if A[i][c]==0:#If there is a zero element
+                                    A[i][c]=A[i-1][c]#Shifting it
                                     A[i-1][c]=0
  
-        if hscore<points:
+        if hscore<points:#If score exceeds high score
             hscore=points
 
-        add()
+        add()#Add new element by calling add() function
 
+#To add element to game matrix
 def add():
     a=[2,2,2,4]
-    m=random.choice(a)
+    m=random.choice(a)#Choosing element from list a at random
 
-    while 1:
+    while 1:#Inerting element at ranom
         i=int(random.uniform(0,4))
         j=int(random.uniform(0,4))
 
-        if(A[i][j]==0):
+        if(A[i][j]==0):#As long as space in matrix is empty
             A[i][j]=m
             break    
 
@@ -424,7 +429,7 @@ def reset():
 
 #To display a welcome message at the start of the game
 def welcome_message():
-    global quit, c
+    global quit, d
 
     mouse=pygame.mouse.get_pos()#To get the mouse cursor position    
     click=pygame.mouse.get_pressed()#To get the state of the mouse buttons  
@@ -440,7 +445,7 @@ def welcome_message():
     if mouse[0]<450 and mouse[0]>330 and mouse[1]<450 and mouse[1]>400:#If mouse hovers over button
         pygame.draw.rect(screen, GREEN,(310,400,130,50))#Change button colour to green 
         if click[0]==1:#If button is clicked 
-           c=1
+           d+=1
            draw() #Draw the game matrix, thereby startng the game
  
     else:#Display colour of button as blue	
@@ -494,11 +499,12 @@ welcome_message() #Dispaying welcome message
 
 quit = False #Initialzing variable  
 
+d=0
+
 while not quit: #While game is running
     global c    
     screen.fill((50, 50, 50)) #Fill screen to grey
 
-    draw() #Draw game matrix
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:#If user quits game
@@ -519,13 +525,19 @@ while not quit: #While game is running
         if event.type ==pygame.KEYDOWN:
             if event.key==pygame.K_DOWN:#If user presses down arrow key
                 down()
-  
+
+    if d==0:#If game has just begun
+        welcome_message()#Display welcome message
+
+    if d>0:#If game has already begun
+        draw()#Draw game matrix
+
     #If user achieves 2048
     if c==0:         
         for i in range(0,4):
             for j in range(0,4):
 
-                if A[i][j]==2048: #Checking if any element in game matrix is equal to 2048               
+                if A[i][j]==16: #Checking if any element in game matrix is equal to 2048               
                     win_message()#Displaying victory message by calling win_message() function                   
 
     pygame.display.update() #Update portions of the screen for software displays  
